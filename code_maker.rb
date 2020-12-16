@@ -3,11 +3,10 @@ require './code_peg'
 
 class CodeMaker < Player
   def initialize(player, code = [])
-    @player = player
-    @code = code
+    super(player, code)
   end
 
-  def create_code()
+  def generate_rand_code()
     puts 'Creating a code to be guessed...'
 
     4.times do |i|
@@ -18,7 +17,3 @@ class CodeMaker < Player
     @code
   end
 end
-
-test_maker = CodeMaker.new('test')
-
-puts test_maker.create_code
