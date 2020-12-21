@@ -32,17 +32,20 @@ class Game
 
     computer_player = Player.new('Computer')
 
-    computer_code = computer_player.generate_rand_code
+    computer_code = Code.generate_rand_code
   end
 
   def play_round
     turn_count = 0
 
     while turn_count < TURN_TOTAL
+      if code_breaker.code == code_maker.code
 
       turn_count += 1
     end
 
-    
+    @code_maker.points += turn_count
+
+    @code_breaker, @code_maker = @code_maker, @code_breaker
   end
 end

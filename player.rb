@@ -15,13 +15,12 @@ class Player
     new_code = Code.new
 
     while !valid do
-      puts 'Please enter a code made up of the 4 of the following peg colors'
+      puts 'Please enter a code made up of the #{Code::CODE_LENGTH} of the following peg colors'
       p CodePeg::VALID_COLORS
 
       #get each peg color from the user
       Code::CODE_LENGTH.times do |i|
         puts "Enter peg #{i + 1}"
-
         @code[i] = CodePeg.new(gets.chomp.strip)
       end
 
@@ -29,10 +28,10 @@ class Player
       valid = Code.is_valid_code?(@code)
     end
 
-    p @code
+    @code
   end
 end
 
-ddddd = Player.new('me')
+dd = Player.new('d')
 
-ddddd.create_code
+dd.create_code

@@ -8,7 +8,7 @@ class Code
     @code = code
   end
 
-  def generate_rand_code()
+  def self.generate_rand_code
     puts 'Creating a code to be guessed...'
 
     CODE_LENGTH.times do |i|
@@ -22,5 +22,9 @@ class Code
   # check validity of user code
   def self.is_valid_code?(input_arr)
     input_arr.all? { |element| CodePeg::VALID_COLORS.include?(element.color.downcase) }
+  end
+
+  def ==(other_object)
+    @code == other_object.code
   end
 end
