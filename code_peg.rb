@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class CodePeg
-  VALID_COLORS = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
+  VALID_COLORS = %w[red orange yellow green blue purple].freeze
 
   attr_accessor :color
 
@@ -7,7 +9,7 @@ class CodePeg
     @color = color
   end
 
-  def get_rand_color
+  def choose_rand_color
     VALID_COLORS[rand(VALID_COLORS.length)]
   end
 end

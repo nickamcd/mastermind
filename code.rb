@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require './code_peg'
 
 class Code
   CODE_LENGTH = 4
   attr_accessor :pegs
-  
+
   def initialize(pegs = [])
     @pegs = pegs
   end
@@ -24,27 +26,25 @@ class Code
   end
 
   # override == operator to compare inner code arrays instead of code instances
-  def ==(other_code)
-    if other_code.class == self.class
-      other_code.pegs.each_with_index do |code_peg, index|
-        if @pegs[index].color.downcase != code_peg.color.downcase
-          return false
-        end
+  def ==(other)
+    if other.class == self.class
+      other.pegs.each_with_index do |code_peg, index|
+        return false if @pegs[index].color.downcase != code_peg.color.downcase
       end
       return true
     end
-    return false
+    false
   end
 
   def find_key_pegs(code)
     key_pegs = []
 
     code.pegs.each_with_index do |code_peg, index|
-      if @pegs[index].color.downcase == code_peg.color.downcase
-        key_pegs << 'Correct'
-      else
-        key_pegs << 'Incorrect'
-      end
+      key_pegs << if @pegs[index].color.downcase == code_peg.color.downcase
+                    'Correct'
+                  else
+                    'Incorrect'
+                  end
     end
 
     p key_pegs

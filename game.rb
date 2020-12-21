@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './player'
 require './code'
 
@@ -19,21 +21,21 @@ class Game
 
       rounds = gets.chomp.to_i
 
-      break if rounds % 2 == 0
+      break if rounds.even? && rounds != 0
     end
 
     play_game(rounds)
   end
 
-private
+  private
 
   def play_game(rounds)
-    #clear terminal to start game
-    system "clear"
+    # clear terminal to start game
+    system 'clear'
     round_count = 1
 
     while round_count <= rounds
-      play_round() 
+      play_round
       round_count += 1
     end
 
@@ -53,12 +55,11 @@ private
 
   def play_round
     turn_count = 1
-    code_guessed = false
 
     puts "Code Maker #{@code_maker.name} must create a code to be guessed:"
     answer = code_maker.create_code
-    #hide code
-    system "clear"
+    # hide code
+    system 'clear'
 
     while turn_count <= TURN_TOTAL
       puts "Turn #{turn_count}:\n\n"
