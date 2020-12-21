@@ -33,7 +33,7 @@ private
     round_count = 1
 
     while round_count <= rounds
-      play_round()
+      play_round() 
       round_count += 1
     end
 
@@ -61,6 +61,7 @@ private
     system "clear"
 
     while turn_count <= TURN_TOTAL
+      puts "Turn #{turn_count}:\n\n"
       puts "Code Breaker #{@code_breaker.name}, make a guess:"
       guess = code_breaker.create_code
 
