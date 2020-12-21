@@ -1,4 +1,5 @@
 require './code_peg'
+require './code'
 
 class Player
   attr_accessor :name, :code, :points
@@ -11,27 +12,27 @@ class Player
 
   def create_code
     valid = false
+    new_code = Code.new
 
     while !valid do
       puts 'Please enter a code made up of the 4 of the following peg colors'
       p CodePeg::VALID_COLORS
 
       #get each peg color from the user
-      4.times do |i|
+      Code::CODE_LENGTH.times do |i|
         puts "Enter peg #{i + 1}"
 
-        @code[i] = gets.chomp.strip
+        @code[i] = CodePeg.new(gets.chomp.strip)
       end
 
       #check the validity of user input
-      valid = Player.is_valid_code?(@code)
+      valid = Code.is_valid_code?(@code)
     end
 
     p @code
   end
-
-  # check validity of user code
-  def self.is_valid_code?(input_arr)
-    input_arr.all? { |element| CodePeg::VALID_COLORS.include?(element.downcase) }
-  end
 end
+
+ddddd = Player.new('me')
+
+ddddd.create_code

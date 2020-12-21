@@ -3,6 +3,12 @@ require './player'
 class Game
   TURN_TOTAL = 12
   rounds = -1
+  attr_reader :players, :code_breaker, :code_maker
+
+  def initialize(players, code_breaker, code_maker)
+    @players = players
+    @code_breaker, @code_maker = players.shuffle
+  end
 
   def start_game
     # begin game by asking for amount of rounds
@@ -33,7 +39,6 @@ class Game
     turn_count = 0
 
     while turn_count < TURN_TOTAL
-      player_1.make_guess
 
       turn_count += 1
     end
