@@ -37,15 +37,36 @@ class Game
 
   def play_round
     turn_count = 0
+    code_guessed = false
+
+    puts "Code Maker #{@code_maker.name} must create a code to be guessed:"
+    code_maker.create_code
 
     while turn_count < TURN_TOTAL
+      puts "Code Breaker #{@code_breaker.name}, make a guess:"
+
       if code_breaker.code == code_maker.code
+        puts "Correct Code!"
+        puts "Code Maker #{@code_maker.name} earns #{turn_count} points!"
+        break
+      end
+
+      # give key pegs for hint
+      code_breaker.code.find_key_pegs(code_maker.code)
 
       turn_count += 1
     end
 
-    @code_maker.points += turn_count
+    if turn_count == TURN_TOTAL
+      puts "The code was not guessed!"
+      puts "The code maker earns a bonus point!"
+      turn_count += 1
+    end
 
+    # assign points to the code maker
+    code_maker.points += turn_count
+
+    # switch roles at the end of round
     @code_breaker, @code_maker = @code_maker, @code_breaker
   end
 end

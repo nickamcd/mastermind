@@ -31,7 +31,3 @@ class Player
     @code
   end
 end
-
-dd = Player.new('d')
-
-dd.create_code
