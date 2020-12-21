@@ -3,7 +3,6 @@ require './code'
 
 class Game
   TURN_TOTAL = 12
-  rounds = -1
   attr_reader :players, :code_breaker, :code_maker
 
   def initialize(players)
@@ -12,6 +11,8 @@ class Game
   end
 
   def start_game
+    rounds = -1
+
     # begin game by asking for amount of rounds
     loop do
       puts 'Please enter an even number of rounds to play'
@@ -21,6 +22,33 @@ class Game
       break if rounds % 2 == 0
     end
 
+    play_game(rounds)
+  end
+
+private
+
+  def play_game(rounds)
+    #clear terminal to start game
+    system "clear"
+    round_count = 1
+
+    while round_count <= rounds
+      play_round()
+      round_count += 1
+    end
+
+    puts 'Points:'
+    puts "  #{players[0].name}: #{players[0].points}"
+    puts "  #{players[1].name}: #{players[1].points}"
+
+    if players[0].points == players[1].points
+      puts 'Its a tie!'
+    else
+      winner = players[0].points > players[1].points ? players[0] : players[1]
+
+      puts "Congratulations #{winner.name}!"
+      puts 'You win!'
+    end
   end
 
   def play_round
@@ -29,17 +57,21 @@ class Game
 
     puts "Code Maker #{@code_maker.name} must create a code to be guessed:"
     answer = code_maker.create_code
+    #hide code
+    system "clear"
 
     while turn_count <= TURN_TOTAL
       puts "Code Breaker #{@code_breaker.name}, make a guess:"
       guess = code_breaker.create_code
 
       # give key pegs for hint
+      puts ''
       guess.find_key_pegs(answer)
+      puts ''
 
       if guess == answer
         puts 'Correct Code!'
-        puts "Code Maker #{@code_maker.name} earns #{turn_count} points!"
+        puts "Code Maker #{@code_maker.name} earns #{turn_count} points!\n\n"
         break
       end
       turn_count += 1
@@ -57,12 +89,3 @@ class Game
     @code_breaker, @code_maker = @code_maker, @code_breaker
   end
 end
-
-player1 = Player.new('Tom')
-player2 = Player.new('Jerry')
-
-player_arr = [player1, player2]
-
-test = Game.new(player_arr)
-
-test.play_round
